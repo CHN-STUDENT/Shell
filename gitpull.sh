@@ -13,7 +13,7 @@ export TERM=${TERM:-dumb}
 
 # 要git pull的目录，多个目录请用逗号,分隔
 # eg:path="/root/test/path1,/root/test/path2"
-path="/root/shell"
+path="/root/Shell"
 
 
 ################不要编辑以下脚本部分################
@@ -45,7 +45,11 @@ IFS="$OLD_IFS"
 for every_dir in ${dir[@]} 
 do 
     cd ${every_dir}
+	work_dir=`pwd`
+	echo "---------------------------------"
+	echo "Start to deal" ${work_dir}
     ${git_path} pull
+	echo "---------------------------------"
 done
 
 echo "All done,thanks for your use."
