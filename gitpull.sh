@@ -13,23 +13,23 @@ export TERM=${TERM:-dumb}
 
 # 要git pull的目录，多个目录请用逗号,分隔
 # eg:path="/root/test/path1,/root/test/path2"
-path="/root/Shell"
+path=""
 
 
 ################不要编辑以下脚本部分################
 
 # Check if user is root
-[ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must run this script as root.${CEND}"; exit 1; }
+[ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must run this script as root.${CEND}"; exit 1; } 2>&1
 
 # Check if directory path exists
 if [[ "${path}" = "" ]]; then 
-	echo "${CFAILURE}Error: You must set the correct directory path.Exit.${CEND}"
+	echo "${CFAILURE}Error: You must set the correct directory path.Exit.${CEND}" 2>&1
 	exit 1
 fi
 
 # Check if command git exists
 if ! [ -x "$(command -v git)" ]; then
-	echo "${CFAILURE}Error: You may not install the git.Exit.${CEND}" 
+	echo "${CFAILURE}Error: You may not install the git.Exit.${CEND}" 2>&1
 	exit 1
 fi
 
@@ -42,14 +42,16 @@ IFS=","
 dir=($path) 
 IFS="$OLD_IFS" 
 
+echo "Start to execute this script." 2>&1
+
 for every_dir in ${dir[@]} 
 do 
     cd ${every_dir}
 	work_dir=`pwd`
-	echo "---------------------------------"
-	echo "Start to deal" ${work_dir}
+	echo "---------------------------------" 2>&1
+	echo "Start to deal" ${work_dir} 2>&1
     ${git_path} pull
-	echo "---------------------------------"
+	echo "---------------------------------" 2>&1
 done
 
-echo "All done,thanks for your use."
+echo "All done,thanks for your use." 2>&1
