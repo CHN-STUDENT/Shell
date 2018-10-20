@@ -1,36 +1,33 @@
 #!/bin/bash
 
 #######################
-PROJECT_NAME="PROJECT"
+PROJECT_NAME="TESTA"
 ROOT_DIR="/root/ABC"
 ######################
 
-flag="N"
-dir_list=`ls -l ${ROOT_DIR} |grep ^d |awk '{print $9}'| sed ':label;N;s/\n/ /;b label'`
-FIND_NAME=""
-for every_dir in ${dir_list}
-do
-    reslut=$(echo ${every_dir} | grep "${PROJECT_NAME}")
-    if [[ "$reslut" != "" ]]; then
-        FIND_NAME="${every_dir}"
-        flag="Y"
-        continue
-    fi
-    if [[ "$reslut" = "" && "${flag}" = "Y" ]]; then
-       break
-    fi
-done
 
-REMOTE_DIR=""
+dir_list=`ls -l ${ROOT_DIR} | grep ^d | awk '{print $9}' | grep ${PROJECT_NAME} | sed ':label;N;s/\n/ /;b label'`
+#ls -l *| grep ^d | awk '{print $9}' | grep 'TESTA' | sed ':label;N;s/\n/ /;b label'
 
-if [[ "${FIND_NAME}" = "" ]];then
-    mkdir -p "${ROOT_DIR}/${PROJECT_NAME}1"
-    REMOTE_DIR="${ROOT_DIR}/${PROJECT_NAME}1"
+remote_name=""
+
+#echo ${dir_list}
+
+if [[ "${dir_list}" = "" ]]; then
+    mkdir -p "${ROOT_DIR}/${PROJECT_NAME}0"
+    remote_name="${ROOT_DIR}/${PROJECT_NAME}0"
 else
-    INDEX=$(echo ${FIND_NAME} | grep -o '[0-9]*')
-    NEW_INDEX=$((${INDEX}+1))
-    mkdir -p "${ROOT_DIR}/${PROJECT_NAME}${NEW_INDEX}"
-    REMOTE_DIR="${ROOT_DIR}/${PROJECT_NAME}${NEW_INDEX}"
+    for((i=0;i<99999;i++))
+    do
+ 
+       if [[ ${dir_list/${PROJECT_NAME}${i}//} != "${dir_list}" ]]; then
+            continue
+       else
+            mkdir -p "${ROOT_DIR}/${PROJECT_NAME}${i}"
+            remote_name="${ROOT_DIR}/${PROJECT_NAME}${i}"
+            break
+       fi
+    done
 fi
 
-echo ${REMOTE_DIR}
+echo ${remote_name}
