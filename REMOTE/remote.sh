@@ -2,7 +2,7 @@
 
 #######################
 PROJECT_NAME="TESTA"
-ROOT_DIR="/root/ABC"
+ROOT_DIR="/root/ABC/TEST"
 ######################
 
 
