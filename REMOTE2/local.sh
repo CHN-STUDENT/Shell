@@ -12,7 +12,7 @@ if ! [ -x "${sshpass_path}" ]; then
     echo "Error: You may not install the sshpass."
 else
     REMOTE_DIR=`${sshpass_path} -p ${REMOTE_PASSWD} ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_IP} -p ${REMOTE_PORT} 'bash -s' < find.sh`
-	echo ${REMOTE_DIR}
+	#echo ${REMOTE_DIR}
 	for everydir in ${REMOTE_DIR}
 	do
 		sshpass -p ${REMOTE_PASSWD} ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_IP} -p ${REMOTE_PORT} " cd ${everydir} && ./draw.out "
